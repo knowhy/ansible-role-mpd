@@ -1,0 +1,43 @@
+---
+# tasks file for ansible-role-mpd
+
+- name: Install packages for mpd.
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mpd
+
+- name: Ensure mpd group is present.
+  group:
+    name: "{{ mpd_group }}"
+    state: present
+
+- name: Ensure mpd user is present.
+  user:
+    name: "{{ mpd_user }}"
+    group: "{{ mpd_group }}"
+    createhome: False
+    system: True
+    state: present
+
+- name: Ensure mpd root path is present.
+  file:
+    path: "{{ mpd_root_path }}"
+    state: directory
+    owner: mpd
+    group: mpd
+
+- name: Configure mpd server.
+  template:
+    src: mpd.conf.j2
+    dest: /etc/mpd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart mpd.
+
+- name: Ensure mpd is enabled and started.
+  service:
+    name: mpd
+    enabled: True

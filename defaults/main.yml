@@ -1,0 +1,124 @@
+---
+# defaults file for ansible-role-mpd
+
+mpd_root_path: "/var/lib/mpd" # defaults to ~/.mpd in default configuration
+mpd_music_directory: "/var/lib/mpd/music" # defaults to ~/music in default configuration
+mpd_playlist_directory: "{{ mpd_root_path }}/playlists"
+mpd_db_file: "{{ mpd_root_path }}/database"
+mpd_log_file: "{{ mpd_root_path }}/log"
+mpd_pid_file: "{{ mpd_root_path }}/pid"
+mpd_state_file: "{{ mpd_root_path }}/state"
+mpd_sticker_file: "{{ mpd_root_path }}/sticker.sql"
+mpd_user: mpd
+mpd_group: mpd
+mpd_bind_address: any
+mpd_socket: "{{ mpd_root_path }}/socket"
+
+mpd_port: 6600
+mpd_log_level: default
+mpd_gapless_mp3_playback: yes
+mpd_restore_paused: no
+mpd_save_absolute_paths_in_playlists: no
+mpd_metadata_to_use: "artist,album,title,track,name,genre,date,composer,performer,disc"
+mpd_auto_update: yes
+mpd_auto_update_depth: 3
+mpd_follow_outside_symlinks: yes
+mpd_follow_inside_symlinks: yes
+mpd_zeroconf_enabled: no
+mpd_zeroconf_name: "Music Player"
+mpd_default_permissions: "read,add,control,admin"
+
+mpd_authorization_data:
+  - { password: admin,
+      permissions: "read,add,control,admin"
+    }
+  - { password: readonly,
+      permissions: "read"
+    }
+mpd_database_proxy: False
+mpd_database_proxy_host: other.mpd.host
+mpd_database_proxy_port: 6600
+mpd_curl_proxy: False
+mpd_curl_proxy_host: proxy.isp.com:8080
+mpd_curl_proxy_user: user
+mpd_curl_proxy_password: password
+mpd_audio_output_alsa_enabled: True
+mpd_audio_output_alsa_name: "My ALSA Device"
+mpd_audio_output_alsa_device: "hw:0,0" # optional
+mpd_audo_output_alsa_mixer_type: hardware # optional
+mpd_audio_output_alsa_mixer_device: default # optional
+mpd_audio_output_alsa_mixer_control: PCM # optional
+mpd_audio_output_alsa_mixer_index: 0 # optional
+mpd_audio_output_oss_enabled: False
+mpd_audio_output_oss_name: "My OSS Device"
+mpd_audio_output_oss_device: /dev/dsp # optional
+mpd_audio_output_oss_mixer_type: hardware # optional
+mpd_audio_output_oss_mixer_device: "/dev/dsp" # optional
+mpd_audio_output_oss_mixer_control: PCM # optional
+mpd_audio_output_shout_enabled: False
+mpd_audio_output_shout_encoder: vorbis # optional
+mpd_audio_output_shout_name: "My Shout Stream"
+mpd_audio_output_shout_host: localhost
+mpd_audio_output_shout_port: 8000
+mpd_audio_output_shout_mount: "/mpd.ogg"
+mpd_audio_output_shout_password: hackme
+mpd_audio_output_shout_quality: 5.0 # do not define if bitrate is defined
+#mpd_audio_output_shout_bitrate: 128 # do not define if quality is defined
+mpd_audio_output_shout_format: 44100:16:1
+mpd_audio_output_shout_protocol: icecast2 # optional
+mpd_audio_output_shout_user: shout # optional
+mpd_audio_output_shout_description: "My Stream Description" # optional
+mpd_audio_output_shout_url: http://example.com # optional
+mpd_audio_output_shout_genre: jazz # optional
+mpd_audio_output_shout_public: no # optional
+mpd_audio_output_shout_timeout: 2 # optional
+mpd_audio_output_shout_mixer_type: software # optional
+mpd_audio_output_recorder_enabled: False
+mpd_audio_output_recorder_name: "My recorder"
+mpd_audio_output_recorder_encoder: vorbis # optional, vorbis or lame
+mpd_audio_output_recorder_path: /var/lib/mpd/recorder/mpd.ogg
+mpd_audio_output_recorder_quality: 5.0 # do not define if bitrate is defined
+#mpd_audio_output_recorder_bitrate: 128 # do not define if quality is defined
+mpd_audio_output_recorder_format: 44100:16:1
+mpd_audio_output_httpd_enabled: False
+mpd_audio_output_httpd_name: "My HTTP Stream"
+mpd_audio_output_httpd_encoder: vorbis # optional, vorbis or lame
+mpd_audio_output_httpd_port: 8000
+mpd_audio_output_httpd_bind_to_address: 0.0.0.0 (optional, IPv4 or IPv6)
+mpd_audio_output_httpd_quality: 5.0 # do not define if bitrate is defined
+#mpd_audio_output_httpd_bitrate: 128 # do not define if quality is defined
+mpd_audio_output_httpd_format: 44100:16:1
+mpd_audio_output_httpd_max_clients: 0 # optional, 0=no limit
+mpd_audio_ouput_pulse_enabled: True
+mpd_audio_ouput_pulse_name: "My Pulse Output"
+#mpd_audio_ouput_pulse_server: remote_server # optional
+#mpd_audio_ouput_pulse_sink: remote_server_sink # optional
+mpd_audio_output_winmm_enabled: False
+mpd_audio_output_winmm_name: "My WinMM output"
+mpd_audio_output_winmm_device: "Digital Audio (S/PDIF) (High Definition Audio Device)" # or 0, optional
+mpd_audio_output_winmm_mixer_type: hardware # optional
+mpd_audio_output_openal_enabled: False
+mpd_audio_output_openal_name: "My OpenAL output"
+mpd_audio_output_openal_device: "Digital Audio (S/PDIF) (High Definition Audio Device)" # optional
+mpd_audio_output_pipe_enabled: False
+mpd_audio_output_pipe_name: "my pipe"
+mpd_audio_output_pipe_command: "aplay -f cd 2>/dev/null"
+mpd_audio_output_pipe_format: "44100:16:2"
+mpd_audio_output_null_enabled: False
+mpd_audio_output_null_name: "My Null Output"
+mpd_audio_output_null_mixer_type: none # optional
+mpd_samplerate_converter_enabled: False
+mpd_samplerate_converter: "Fastest Sinc Interpolator"
+
+mpd_replaygain: "off"
+mpd_replaygain_preamp: 0
+mpd_replaygain_missing_preamp: 0
+mpd_replaygain_limit: yes
+
+mpd_volume_normalization: no
+mpd_filesystem_charset: "UTF-8"
+mpd_id3v1_encoding: ISO-8859-1
+sidplay_decoder_enabled: False
+sidplay_decoder_songlength_database: /media/C64Music/DOCUMENTS/Songlengths.txt
+sidplay_decoder_default_songlength: 120
+sidplay_decoder_filter: True

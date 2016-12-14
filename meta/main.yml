@@ -1,0 +1,21 @@
+galaxy_info:
+  author: Henrik Pingel
+  description: Ansible role to install mpd music player daemon
+  company:
+
+  license: BSD
+
+  min_ansible_version: 1.2
+
+  github_branch: master
+
+  platforms:
+  - name: GenericLinux
+    versions:
+      - all
+      - any
+
+  galaxy_tags:
+    - mpd
+
+dependencies: []

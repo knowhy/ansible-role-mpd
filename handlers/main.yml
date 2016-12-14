@@ -1,0 +1,17 @@
+---
+# handlers file for ansible-role-mpd
+
+- name: Restart mpd.
+  service:
+    name: mpd
+    state: restarted
+
+- name: Start mpd.
+  service:
+    name: mpd
+    state: started
+
+- name: Stop mpd.
+  service:
+    name: mpd
+    state: stopped

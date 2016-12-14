@@ -1,0 +1,231 @@
+# {{ ansible_managed }}
+# configuration file for MPD.
+# Read the user manual for documentation: http://www.musicpd.org/doc/user/
+
+music_directory "{{ mpd_music_directory }}"
+playlist_directory "{{ mpd_playlist_directory }}"
+db_file	"{{ mpd_db_file }}"
+log_file "{{ mpd_log_file }}"
+pid_file "{{ mpd_pid_file }}"
+state_file "{{ mpd_state_file }}"
+
+user "{{ mpd_user }}"
+group "{{ mpd_group }}"
+bind_to_address "{{ mpd_bind_address }}"
+{% if mpd_bind_address is not defined %}
+bind_to_address "{{ mpd_socket }}"
+{% endif %}
+port "{{ mpd_port }}"
+
+log_level "{{ mpd_log_level }}"
+gapless_mp3_playback "{{ mpd_gapless_mp3_playback }}"
+restore_paused "{{ mpd_restore_paused }}"
+save_absolute_paths_in_playlists "{{ mpd_save_absolute_paths_in_playlists }}"
+metadata_to_use "{{ mpd_metadata_to_use }}"
+auto_update "{{ mpd_auto_update }}"
+auto_update_depth "{{ mpd_auto_update_depth }}"
+follow_outside_symlinks	"{{ mpd_follow_outside_symlinks }}"
+follow_inside_symlinks "{{ mpd_follow_inside_symlinks }}"
+zeroconf_enabled "{{ mpd_zeroconf_enabled }}"
+zeroconf_name "{{ mpd_zeroconf_name }}"
+{% for auth_data in mpd_authorization_data %}
+password "{{ auth_data.password }}@{{ auth_data.permissions }}"
+{% endfor %}
+default_permissions "{{ mpd_default_permissions }}"
+{% if mpd_database_proxy %}
+database {
+  plugin "proxy"
+  host "{{ mpd_database_proxy_host }}"
+  port "{{ mpd_database_proxy_port }}"
+}
+{% endif %}
+{% if mpd_curl_proxy %}
+input {
+  plugin "curl"
+  proxy "{{ mpd_curl_proxy_host }}"
+  proxy_user "{{ mpd_curl_proxy_user }}"
+  proxy_password "{{ mpd_curl_proxy_password }}"
+}
+{% endif %}
+{% if mpd_audio_output_alsa_enabled %}
+audio_output {
+  type "alsa"
+  name "{{ mpd_audio_output_alsa_name }}"
+  {% if mpd_audio_output_alsa_device is defined %}  
+  device "{{ mpd_audio_output_alsa_device }}"
+  {% endif %}
+  {% if mpd_audo_output_alsa_mixer_type is defined %}
+  mixer_type "{{ mpd_audo_output_alsa_mixer_type }}"
+  {% endif %}  
+  {% if mpd_audio_output_alsa_mixer_device is defined %}
+  mixer_device "{{ mpd_audio_output_alsa_mixer_device }}"
+  {% endif %}
+  {% if mpd_audio_output_alsa_mixer_control is defined %}
+  mixer_control	"{{ mpd_audio_output_alsa_mixer_control }}"
+  {% endif %}
+  {% if mpd_audio_output_alsa_mixer_index is defined %}
+  mixer_index	"{{ mpd_audio_output_alsa_mixer_index }}"
+  {% endif %} 
+}
+{% endif %}
+{% if mpd_audio_output_oss_enabled %}
+audio_output {
+  type "oss"
+  name "{{ mpd_audio_output_oss_name }}"
+  {% if mpd_audio_output_oss_device is defined %}
+  device "{{ mpd_audio_output_oss_device }}"
+  {% endif %}
+  {% if mpd_audio_output_oss_mixer_type is defined %}
+  mixer_type "{{ mpd_audio_output_oss_mixer_type }}"
+  {% endif %}
+  {% if mpd_audio_output_oss_mixer_device is defined %}
+  mixer_device "{{ mpd_audio_output_oss_mixer_device }}"
+  {% endif %}
+  {% if mpd_audio_output_oss_mixer_control %}
+  mixer_control	"{{ mpd_audio_output_oss_mixer_control }}"
+  {% endif %}  
+}
+{% endif %}
+{% if mpd_audio_output_shout_enabled %}
+audio_output {
+  type "shout"
+  {% if mpd_audio_output_shout_encoder is defined %}
+  encoder "{{ mpd_audio_output_shout_encoder }}"
+  {% endif %} 
+  name "{{ mpd_audio_output_shout_name }}"
+  host "{{ mpd_audio_output_shout_host }}"
+  port "{{ mpd_audio_output_shout_port }}"
+  mount	"{{ mpd_audio_output_shout_mount }}"
+  password "{{ mpd_audio_output_shout_password }}"
+  quality "{{ mpd_audio_output_shout_quality }}"
+  bitrate "{{ mpd_audio_output_shout_bitrate }}"
+  format "{{ mpd_audio_output_shout_format }}"
+  {% if mpd_audio_output_shout_protocol is defined %}
+  protocol "{{ mpd_audio_output_shout_protocol }}"
+  {% endif %}
+  {% if mpd_audio_output_shout_user is defined %}
+  user "{{ mpd_audio_output_shout_user }}"
+  {% endif %}
+  {% if mpd_audio_output_shout_description is defined %}
+  description "{{ mpd_audio_output_shout_description }}"
+  {% endif %}
+  {% if mpd_audio_output_shout_url is defined %}
+  url "{{ mpd_audio_output_shout_url }}"
+  {% endif %}
+  {% if mpd_audio_output_shout_genre is defined %}
+  genre	"{{ mpd_audio_output_shout_genre }}"
+  {% endif %}
+  {% if mpd_audio_output_shout_public is defined %}
+  public "{{ mpd_audio_output_shout_public }}"
+  {% endif %}
+  {% if mpd_audio_output_shout_timeout is defined %}
+  timeout "{{ mpd_audio_output_shout_timeout }}"
+  {% endif %}
+  {% if mpd_audio_output_shout_mixer_type is defined %}
+  mixer_type "{{ mpd_audio_output_shout_mixer_type }}"
+  {% endif %}
+}
+{% endif %}
+{% if mpd_audio_output_recorder_enabled %}
+audio_output {
+  type "recorder"
+  name "{{ mpd_audio_output_recorder_name }}"
+  {% if mpd_audio_output_recorder_encoder is defined %}
+  encoder "{{ mpd_audio_output_recorder_encoder }}"
+  {% endif %}
+  path "{{ mpd_audio_output_recorder_path }}"
+  quality "{{ mpd_audio_output_recorder_quality }}"			
+  bitrate "{{ mpd_audio_output_recorder_bitrate }}"
+  format "{{ mpd_audio_output_recorder_format }}"
+}
+{% endif %}
+{% if mpd_audio_output_httpd_enabled %}
+audio_output {
+  type "httpd"
+  name "{{ mpd_audio_output_httpd_name }}"
+  {% if mpd_audio_output_httpd_encoder is defined %}
+  encoder "{{ mpd_audio_output_httpd_encoder }}"
+  {% endif %}
+  port "{{ mpd_audio_output_httpd_port }}"
+  {% if mpd_audio_output_httpd_bind_to_address is defined %}
+  bind_to_address "{{ mpd_audio_output_httpd_bind_to_address }}"
+  {% endif %}
+  {% if mpd_audio_output_httpd_quality is defined %}
+  quality "{{ mpd_audio_output_httpd_quality }}"
+  {% endif %}
+  {% if mpd_audio_output_httpd_bitrate is defined %}
+  bitrate "{{ mpd_audio_output_httpd_bitrate }}"
+  {% endif %}
+  format "{{ mpd_audio_output_httpd_format }}"
+  {% if mpd_audio_output_httpd_max_clients is defined %}
+  max_clients "{{ mpd_audio_output_httpd_max_clients }}"
+  {% endif %}  
+}
+{% endif %}
+{% if mpd_audio_ouput_pulse_enabled %}
+audio_output {
+  type "pulse"
+  name "{{ mpd_audio_ouput_pulse_name }}"
+  {% if mpd_audio_ouput_pulse_server is defined %}
+  server "{{ mpd_audio_ouput_pulse_server }}"
+  {% endif %}
+  {% if mpd_audio_ouput_pulse_sink is defined %}
+  sink "{{ mpd_audio_ouput_pulse_sink }}"
+  {% endif %}
+}
+{% endif %}
+{% if mpd_audio_output_winmm_enabled %}
+audio_output {
+  type "winmm"
+  name "{{ mpd_audio_output_winmm_name }}"
+  device "{{ mpd_audio_output_winmm_device }}"
+  mixer_type "{{ mpd_audio_output_winmm_mixer_type }}"
+}
+{% endif %}
+{% if mpd_audio_output_openal_enabled %}
+audio_output {
+  type "openal"
+  name "{{ mpd_audio_output_openal_name }}"
+  {% if mpd_audio_output_openal_device is defined %}
+  device "{{ mpd_audio_output_openal_device }}"
+  {% endif %}
+}
+{% endif %}
+{% if mpd_audio_output_pipe_enabled %}
+audio_output {
+  type "pipe"
+  name "{{ mpd_audio_output_pipe_name }}"
+  command "{{ mpd_audio_output_pipe_command }}"
+  format "{{ mpd_audio_output_pipe_format }}"
+}
+{% endif %}
+{% if mpd_audio_output_null_enabled %}
+audio_output {
+  type "null"
+  name "{{ mpd_audio_output_null_name }}"
+  {% if mpd_audio_output_null_mixer_type is defined %}
+  mixer_type "{{ mpd_audio_output_null_mixer_type }}"
+  {% endif %} 
+}
+{% endif %} 
+{% if mpd_samplerate_converter_enabled %}
+samplerate_converter "{{ mpd_samplerate_converter }}"
+{% endif %}
+replaygain "{{ mpd_replaygain }}"
+replaygain_preamp "{{ mpd_replaygain_preamp }}"
+
+{% if mpd_replaygain_missing_preamp is defined %}
+replaygain_missing_preamp "{{ mpd_replaygain_missing_preamp }}"
+{% endif %}
+replaygain_limit "{{ mpd_replaygain_limit }}"
+volume_normalization "{{ mpd_volume_normalization }}"
+filesystem_charset "{{ mpd_filesystem_charset }}"
+id3v1_encoding "{{ mpd_id3v1_encoding }}"
+{% if sidplay_decoder_enabled %}
+decoder {
+  plugin "sidplay"
+  songlength_database "{{ sidplay_decoder_songlength_database }}"
+  default_songlength "{{ sidplay_decoder_default_songlength }}"
+  filter "{{ sidplay_decoder_filter | bool | lower }}"
+}
+{% endif %}
