@@ -13,8 +13,5 @@
 - name: Enable universe repository
   apt_repository:
     repo: deb http://archive.ubuntu.com/ubuntu xenial universe
-    state: present
-
-- name: Update repositories.
-  apt:
     update_cache: True
+    state: present
