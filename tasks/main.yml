@@ -1,6 +1,9 @@
 ---
 # tasks file for ansible-role-mpd
 
+- include: setup-Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
 - name: Install packages for mpd.
   package:
     name: "{{ item }}"
