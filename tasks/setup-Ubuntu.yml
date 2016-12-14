@@ -12,7 +12,7 @@
 
 - name: Enable universe repository
   apt_repository:
-    repo: deb http://archive.ubuntu.com/ubuntu 16.04 universe
+    repo: deb http://archive.ubuntu.com/ubuntu xenial universe
     state: present
 
 - name: Update repositories.
